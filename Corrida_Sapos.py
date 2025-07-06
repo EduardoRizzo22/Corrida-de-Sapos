@@ -5,7 +5,6 @@ import time
 PISTA = 50
 vencedor = None
 
-# lock para escolher o vencedor 
 lock = threading.Lock()
 
 class Sapo(threading.Thread):
@@ -17,16 +16,12 @@ class Sapo(threading.Thread):
     def run(self):
         global vencedor
         while self.posicao < PISTA:
-
-            # o sapo pula aleatoriamente 
             pulo = random.randint(1, 5)
             self.posicao += pulo
             print(f"{self.nome} pulou {pulo} casas e está na posição {self.posicao}")
 
-            # simulação de pausa entre os pulos / recomendação do video do youtube
             time.sleep(random.uniform(0.1, 0.5))
 
-        # chegaram o no final e estam precisando escolher o vencedor 
         with lock:
             if vencedor is None:
                 vencedor = self.nome
